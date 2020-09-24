@@ -1,0 +1,22 @@
+{
+  "name": "hola",
+  "version": "1.0.0",
+  "description": "hola description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tempest-mind/hola.git"
+  },
+  "keywords": [
+    "hola"
+  ],
+  "author": "tempest-mind",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tempest-mind/hola/issues"
+  },
+  "homepage": "https://github.com/tempest-mind/hola#readme"
+}

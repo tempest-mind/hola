@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/tempest-mind/hola/issues"
   },
-  "homepage": "https://github.com/tempest-mind/hola#readme"
+  "homepage": "https://github.com/tempest-mind/hola#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
 }

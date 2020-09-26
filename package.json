@@ -22,6 +22,8 @@
   "homepage": "https://github.com/tempest-mind/hola#readme",
   "devDependencies": {
     "del": "^6.0.0",
+    "download": "^8.0.0",
+    "global-agent": "^2.1.12",
     "gulp": "^4.0.2"
   }
 }

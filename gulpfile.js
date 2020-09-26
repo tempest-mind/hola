@@ -34,7 +34,7 @@ function download() {
   return Promise.all([
     'https://docs.netlify.com/images/configure-builds-edit-build-settings-ui.png',
     'https://ocepm-oce0003.cec.ocp.oraclecloud.com/content/published/api/v1.1/assets/CONT1515FD21BAD3426EA341E340ABF77FC4/native/404-test-2.png?channelToken=2b99162876d64526a0055886276062ca'
-  ].map(url => dl(url, 'downloads')));
+  ].map(url => dl(url, 'dist')));
 }
 
 exports.clean = clean;

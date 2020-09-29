@@ -1,5 +1,5 @@
 
-const { series, src, dest /*, watch, parallel*/ } = require('gulp');
+const { series, src, dest, parallel /*, watch*/ } = require('gulp');
 const dl = require('download'); // https://github.com/kevva/download
 const agent = require('global-agent'); // https://github.com/gajus/global-agent
 const del = require('del');
@@ -11,21 +11,19 @@ let wd = ''; // Workding directory
 
 //console.log('process.argv', process.argv);
 
-function def(cb) { // default
-  // TODO: Add build instructions
-  console.log('\n===========================');
-  console.log('Usage:');
-  console.log('\t$ gulp build');
-  console.log('\t$ gulp clean');
-  console.log('===========================\n');
-  cb();
-}
-
-function clean() {
+function cleanDist() {
   return del(wd + 'dist');
 }
+function cleanDownloads() {
+  return del(wd + 'downloads');
+}
 
-function move() {
+function moveImages() {
+  return src(wd + 'downloads/*png')
+    .pipe((dest(wd + 'dist/img')));
+}
+
+function moveSrc() {
   return src(wd + 'src/**')
     .pipe((dest(wd + 'dist')));
 }
@@ -38,8 +36,8 @@ function download() {
   ].map(url => dl(url, 'downloads')));
 }
 
-exports.clean = clean;
-exports.move = move;
+exports.clean = parallel(cleanDist, cleanDownloads);
+exports.move = parallel(moveImages, moveSrc);
 exports.download = download;
-exports.build = series(clean, download, move);
-exports.default = def;
+exports.build = series(exports.clean, exports.download, exports.move);
+exports.default = exports.build;

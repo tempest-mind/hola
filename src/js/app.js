@@ -7,7 +7,6 @@
   const $authUrl = $('#auth-url');
 
   function submit($evt) {
-    console.log('submit');
     $evt.preventDefault();
     let clientId = $clientId.val();
     if (clientId) {
@@ -24,31 +23,40 @@
       result[keyValue[0]] = keyValue[1];
       return result;
     }, {});
-
     document.location.hash = '';
-
     if (!localStorage.getItem(response.state)) {
       alert('Potential CSRF Attack');
       return;
     }
-
     localStorage.removeItem(response.state);
-
     fetch('https://api.netlify.com/api/v1/sites', {
       headers: {
         'Authorization': 'Bearer ' + response.access_token
       }
     }).then((response) => {
+      resp(response);
       response.json().then((json) => {
-        output('Your sites: ' + json.map((site) => `<a href="${site.url}">${site.url}</a>`).join(','));
+        pl(json);
       });
     }).catch((error) => {
-      output(`Error fetching sites: ${error}`);
+      pl(`Error fetching sites: ${error}`);
     });    
   }
 
-  function output(text) {
-    $('#output').html('').html(text);
+  function pl(content) {
+    output(content, '#output');
+  }
+  function resp(content) {
+    output(content, '#response');
+  }
+
+  function output(content, selector) {
+    $(selector).text('');
+    try {
+      $(selector).text(JSON.stringify(content, null, 2));
+    } catch (e) {
+      $(selector).text(content);
+    }
   }
 
   if (hash) {

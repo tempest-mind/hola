@@ -44,7 +44,7 @@
   }
 
   function pl(content) {
-    output(content, '#output');
+    output(content, '#payload');
   }
   function resp(content) {
     output(content, '#response');

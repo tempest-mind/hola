@@ -18,6 +18,7 @@
   }
 
   function extractToken() {
+    hsh(hash);
     const response = hash.replace(/^#/, '').split('&').reduce((result, pair) => {
       const keyValue = pair.split('=');
       result[keyValue[0]] = keyValue[1];
@@ -46,8 +47,13 @@
   function pl(content) {
     output(content, '#payload');
   }
+
   function resp(content) {
     output(content, '#response');
+  }
+
+  function hsh(content) {
+    output(content, '#hash');
   }
 
   function output(content, selector) {

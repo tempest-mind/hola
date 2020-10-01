@@ -6,7 +6,14 @@
   const $clientId = $('#client-id');
   const $authUrl = $('#auth-url');
 
-  function submit($evt) {
+  const $apiUrl = $('#api-url');
+  const $bearer = $('#bearer');
+  const $verb = $('#verb');
+  const $body = $('#body');
+  const $apiSubmit = $('#api-submit');
+  const $response = $('#response');
+
+  function clientIdSubmit($evt) {
     $evt.preventDefault();
     let clientId = $clientId.val();
     if (clientId) {
@@ -17,6 +24,28 @@
     }
   }
 
+  function apiSubmit($evt) {
+    $evt.preventDefault();
+    doFetch();
+  }
+
+  function doFetch() {
+    fetch($apiUrl.val().trim(), {
+      method: $verb.val().trim(),
+      body: $verb.val().trim().toLowerCase() === 'get' ? null : $body.val().trim(),
+      headers: {
+        'Authorization': 'Bearer ' + $bearer.val().trim()
+      }
+    }).then((response) => {
+      resp(response.status);
+      response.json().then((json) => {
+        pl(json);
+      });
+    }).catch((error) => {
+      pl(`Error fetching sites: ${error}`);
+    });
+  }
+
   function extractToken() {
     hsh(hash);
     const response = hash.replace(/^#/, '').split('&').reduce((result, pair) => {
@@ -24,24 +53,16 @@
       result[keyValue[0]] = keyValue[1];
       return result;
     }, {});
-    document.location.hash = '';
-    if (!localStorage.getItem(response.state)) {
+    $bearer.val(response.access_token);
+    if (response.cfg !== 'step-3') {
+      document.location.hash = '';
+    }
+    if (!localStorage.getItem(response.state) && response.cfg !== 'step-3') {
       alert('Potential CSRF Attack');
       return;
     }
     localStorage.removeItem(response.state);
-    fetch('https://api.netlify.com/api/v1/sites', {
-      headers: {
-        'Authorization': 'Bearer ' + response.access_token
-      }
-    }).then((response) => {
-      resp(response);
-      response.json().then((json) => {
-        pl(json);
-      });
-    }).catch((error) => {
-      pl(`Error fetching sites: ${error}`);
-    });    
+    doFetch();
   }
 
   function pl(content) {
@@ -50,6 +71,12 @@
 
   function resp(content) {
     output(content, '#response');
+    $response.removeClass('red green');
+    if ($.isNumeric(content) && content >= 200 && content <= 299) {
+      $response.addClass('green');
+    } else {
+      $response.addClass('red');
+    }
   }
 
   function hsh(content) {
@@ -65,12 +92,17 @@
     }
   }
 
+  if (document.location.href[document.location.href.length - 1] === '#') {
+    document.location.href = document.location.href.slice(0, -1);
+  }
+
   if (hash) {
     $('#step-3').show();
     extractToken();
+    $apiSubmit.click(apiSubmit);
   } else {
     $currentUrl.text(document.location.href);
-    $clientIdForm.submit(submit);
+    $clientIdForm.submit(clientIdSubmit);
     $('#step-1').show();
 
     state = Math.random();

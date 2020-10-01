@@ -43,13 +43,40 @@
     
       <div id="step-3" class="step">
         <h3>Step 3: Make API calls</h3>
-    
-        <h5>Response:</h5>
-        <pre><code id="response">Loading response...</code></pre>
-        <h5>Payload:</h5>
-        <pre><code id="payload">Loading sites for this user...</code></pre>
-        <h5>Hash:</h5>
-        <pre><code id="hash"></code></pre>
+
+        <style>
+          .api-form {
+            display: block;
+          }
+          input.api-form {
+            min-width: 50rem;
+          }
+        </style>
+
+        <label>URL</label>
+        <input id="api-url" class="api-form" type="text" value="https://api.netlify.com/api/v1/sites" placeholder="URL"/>
+        <label>Verb</label>
+        <input id="verb" class="api-form" type="text" value="GET" placeholder="Verb"/>
+        <label>Body</label>
+        <input id="body" class="api-form" type="text" value="{}" placeholder="Body"/>
+        <label>Bearer <em>(override)</em></label>
+        <input id="bearer" class="api-form" type="password" placeholder="Bearer"/>
+        <button id="api-submit" class="api-form">Submit</button>
+
+        <h5>Response status:</h5>
+        <style>
+          .red {
+            color: red;
+          }
+          .green {
+            color: green;
+          }
+        </style>
+        <pre><code id="response" class="green">Loading response status...</code></pre>
+        <h5>Response payload:</h5>
+        <pre><code id="payload">Loading payload...</code></pre>
+        <h5 style="display:none">Hash:</h5>
+        <pre style="display:none"><code id="hash"></code></pre>
       </div>      
     </div>
     <hr>

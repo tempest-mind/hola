@@ -17,8 +17,6 @@
     $evt.preventDefault();
     let clientId = $clientId.val();
 
-    state = Math.random();
-
     if (clientId) {
       let redirectURI;
       //https://app.netlify.com/authorize?
@@ -28,10 +26,10 @@
       //    &state=0.04749481367019781
       if (clientId === 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY') { // Use the single instance redirect URL.
         redirectURI = 'https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index';
-        localStorage.setItem((state = 'https://stupefied-shirley-45b0a3.netlify.app/app.html'), true);
+        state = 'https://stupefied-shirley-45b0a3.netlify.app/app.html');
       } else {
         redirectURI = document.location.href;
-        localStorage.setItem(state, true);
+        state = Math.random();
       }
       $authUrl.prop('href', `https://app.netlify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectURI}&state=${state}`);
       $('.step').hide();
@@ -72,11 +70,11 @@
     if (response.cfg !== 'step-3') {
       document.location.hash = '';
     }
-    if (!localStorage.getItem(response.state) && response.cfg !== 'step-3') {
+    /*if (!localStorage.getItem(response.state) && response.cfg !== 'step-3') {
       alert('Potential CSRF Attack');
       return;
     }
-    localStorage.removeItem(response.state);
+    localStorage.removeItem(response.state);*/
     doFetch();
   }
 

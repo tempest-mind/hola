@@ -1,7 +1,9 @@
 exports.handler = async event => {
-  const subject = event.queryStringParameters.name || 'World';
+  // Get the 'state' and redirect.
+  const redirect = event.queryStringParameters.state || 'https://stupefied-shirley-45b0a3.netlify.app/';
   return {
-    statusCode: 200,
-    body: `Hello ${subject}`
+    statusCode: 303,
+    Location: redirect,
+    body: `Hello ${redirect}`
   };
 };

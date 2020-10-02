@@ -26,7 +26,7 @@
       //    &state=0.04749481367019781
       if (clientId === 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY') { // Use the single instance redirect URL.
         redirectURI = 'https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index';
-        state = 'https://stupefied-shirley-45b0a3.netlify.app/app.html');
+        state = 'https://stupefied-shirley-45b0a3.netlify.app/app.html';
       } else {
         redirectURI = document.location.href;
         state = Math.random();

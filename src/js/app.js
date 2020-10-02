@@ -17,7 +17,12 @@
     $evt.preventDefault();
     let clientId = $clientId.val();
     if (clientId) {
-      var redirectURI = document.location.href;
+      let redirectURI;
+      if (clientId === 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O') { // Use the single instance redirect URL.
+        redirectURI = 'https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index';
+      } else {
+        redirectURI = document.location.href;
+      }
       $authUrl.prop('href', `https://app.netlify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectURI}&state=${state}`);
       $('.step').hide();
       $('#step-2').show();

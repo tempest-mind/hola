@@ -6,7 +6,7 @@ exports.handler = async event => {
     statusCode: 302,
     body: `${state}`,
     headers: {
-      Location: `${state}?access_url&${params.access_url}`
+      Location: `${state}`
     }
   };
 };

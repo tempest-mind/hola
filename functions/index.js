@@ -3,7 +3,7 @@ exports.handler = async event => {
   const redirect = event.queryStringParameters.state || 'https://stupefied-shirley-45b0a3.netlify.app/';
   return {
     statusCode: 302,
-    Location: redirect,
+    location: redirect,
     body: `Hello ${redirect}`
   };
 };

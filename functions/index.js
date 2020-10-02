@@ -1,11 +1,16 @@
 exports.handler = async event => {
-  // Get the 'state' and redirect.
-  const redirect = event.queryStringParameters.state || 'https://stupefied-shirley-45b0a3.netlify.app/';
+  const state = event.queryStringParameters.state || 'https://stupefied-shirley-45b0a3.netlify.app/';
+  console.info("EVENT\n" + JSON.stringify(event, null, 2));
+
   return {
-    statusCode: 302,
-    body: `Hello ${redirect}`,
-    headers: {
-      Location: redirect
-    }
+    statusCode: 200,
+    body: `${JSON.stringify(event, null, 2)}`,
   };
+  /*return {
+    statusCode: 302,
+    body: `${state}`,
+    headers: {
+      Location: state
+    }
+  };*/
 };

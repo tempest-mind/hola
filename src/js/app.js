@@ -1,6 +1,7 @@
 (function($) {
   let state;
   const hash = document.location.hash;
+  const search = document.location.search.split('?access_code=');
   const $currentUrl  = $('#current-url');
   const $clientIdForm = $('#client-id-form');
   const $clientId = $('#client-id');
@@ -20,11 +21,6 @@
     if (clientId) {
       let responseType;
       let redirectURI;
-      //https://app.netlify.com/authorize?
-      //    client_id=cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY&
-      //    response_type=token&
-      //    redirect_uri=https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index&
-      //    state=0.04749481367019781
       if (clientId === 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY') { // Use the single instance redirect URL.
         responseType = 'code';
         redirectURI = 'https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index';
@@ -63,12 +59,17 @@
   }
 
   function extractToken() {
-    hsh(hash);
-    const response = hash.replace(/^#/, '').split('&').reduce((result, pair) => {
-      const keyValue = pair.split('=');
-      result[keyValue[0]] = keyValue[1];
-      return result;
-    }, {});
+    let response = {};
+    if (hash) {
+      hsh(hash);
+      response = hash.replace(/^#/, '').split('&').reduce((result, pair) => {
+        const keyValue = pair.split('=');
+        result[keyValue[0]] = keyValue[1];
+        return result;
+      }, {});
+    } else if (search.length > 1) {
+      response.access_token = search[1];
+    }
     $bearer.val(response.access_token);
     if (response.cfg !== 'step-3') {
       document.location.hash = '';
@@ -112,7 +113,7 @@
     document.location.href = document.location.href.slice(0, -1);
   }
 
-  if (hash) {
+  if (hash || search.length > 1) {
     $('#step-3').show();
     extractToken();
     $apiSubmit.click(apiSubmit);

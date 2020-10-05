@@ -22,7 +22,7 @@
       let responseType;
       let redirectURI;
       if (clientId === 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY') { // Use the single instance redirect URL.
-        responseType = 'ticket';
+        responseType = 'code';
         redirectURI = 'https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index';
         state = 'https://stupefied-shirley-45b0a3.netlify.app/app.html';
       } else {

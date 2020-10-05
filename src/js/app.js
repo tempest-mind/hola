@@ -18,6 +18,7 @@
     let clientId = $clientId.val();
 
     if (clientId) {
+      let responseType;
       let redirectURI;
       //https://app.netlify.com/authorize?
       //    client_id=cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY&
@@ -25,13 +26,15 @@
       //    redirect_uri=https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index&
       //    state=0.04749481367019781
       if (clientId === 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY') { // Use the single instance redirect URL.
+        responseType = 'code';
         redirectURI = 'https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index';
         state = 'https://stupefied-shirley-45b0a3.netlify.app/app.html';
       } else {
+        responseType = 'token';
         redirectURI = document.location.href;
         state = Math.random();
       }
-      $authUrl.prop('href', `https://app.netlify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectURI}&state=${state}`);
+      $authUrl.prop('href', `https://app.netlify.com/authorize?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectURI}&state=${state}`);
       $('.step').hide();
       $('#step-2').show();
     }

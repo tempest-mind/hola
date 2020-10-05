@@ -22,8 +22,8 @@
       //https://app.netlify.com/authorize?
       //    client_id=cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY&
       //    response_type=token&
-      //    redirect_uri=https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index
-      //    &state=0.04749481367019781
+      //    redirect_uri=https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index&
+      //    state=0.04749481367019781
       if (clientId === 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY') { // Use the single instance redirect URL.
         redirectURI = 'https://stupefied-shirley-45b0a3.netlify.app/.netlify/functions/index';
         state = 'https://stupefied-shirley-45b0a3.netlify.app/app.html';

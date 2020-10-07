@@ -5,7 +5,7 @@ exports.handler = async event => {
 
   console.log('event.queryStringParameters', JSON.stringify(event.queryStringParameters, null, 2));
   console.log('event', JSON.stringify(event, null, 2));
-  console.log('event.body', JSON.stringify(event.body, null, 2));
+  //console.log('event.body', JSON.stringify(event.body, null, 2));
 
   console.log('params.state', params.state);
   console.log('state', state);

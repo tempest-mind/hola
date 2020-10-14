@@ -3,22 +3,30 @@
   const $connect = $('#connect');
   const $response = $('#response');
 
-  function doFetch(url = '', opts = {}) {
-    let verb = (opts.method || 'get').toUpperCase();
+  function doFetch(opts={}) {
+    let verb = (opts.type || 'get').toUpperCase();
     let options = Object.assign({}, opts, {
-      method: verb,
-      body: verb === 'GET' ? null : (opts.body || '') .trim(),
-      mode: 'cors',
-      cache: 'no-cache'
+      url: opts.url,
+      type: verb,
+      data: verb === 'GET' ? null : (opts.data || '') .trim(),
+      crossDomain: true,
+      headers: { 
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      }
+
+      //contentType: 'application/json; charset-utf-8'
+      //mode: 'cors',
+      //cache: 'no-cache',
     });
-    return fetch(url.trim(), options
+    return $.ajax(options
     /*{
       method: $verb.val().trim(),
       body: $verb.val().trim().toLowerCase() === 'get' ? null : $body.val().trim(),
       headers: {
         'Authorization': 'Bearer ' + $bearer.val().trim()
       }
-    }*/).then((response) => {
+    }*/).promise().then((response) => {
       resp(response.status);
       response.json().then((json) => {
         pl(json);
@@ -55,10 +63,12 @@
     $evt.preventDefault();
     console.log('connect');
     
-    let resp = await doFetch('https://api.netlify.com/api/v1/oauth/tickets', {
-      method: 'POST',
-      body: JSON.stringify({
-        client_id: 'cAaau0IeagbZJgTquk9bBXqxqWlNRqL2O-kpGGF4wxY'
+    let resp = await doFetch({
+      url: 'https://github.com/login/device/code',
+      type: 'POST',
+      data: JSON.stringify({
+        client_id: 'Iv1.46947a491cbc3796',
+        scope: 'repo'
       })
     });
 
